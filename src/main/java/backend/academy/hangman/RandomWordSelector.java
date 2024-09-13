@@ -1,8 +1,8 @@
 package backend.academy.hangman;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class RandomWordSelector {
     private List<Word> words = new ArrayList<>();
@@ -12,6 +12,6 @@ public class RandomWordSelector {
     }
 
     public Word getRandomWord() {
-        return words.get(new Random().nextInt(words.size()));
+        return words.get(new SecureRandom().nextInt(words.size()));
     }
 }
