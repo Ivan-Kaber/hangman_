@@ -1,5 +1,7 @@
 package backend.academy.hangman;
 
+import com.google.common.collect.RangeMap;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +10,42 @@ import static org.junit.jupiter.api.Assertions.*;
 class RandomWordSelectorTest {
 
     @Test
-    void testGetRandomWord() {
+    void testGetRandomAnimalWord() {
+        RandomWordSelector randomWordSelector = new RandomWordSelector();
+        Word word = randomWordSelector.getRandomWordByCategory(Category.ANIMALS);
 
-        List<Word> words = new ArrayList<>();
-        words.add(new Word("test", Category.ANIMALS, "hint"));
-        RandomWordSelector randomWordSelector = new RandomWordSelector(words);
-        Word word = randomWordSelector.getRandomWord();
-
-        assertEquals(word.word(), "test");
+        assertNotNull(word.word());
         assertEquals(word.category(), Category.ANIMALS);
-        assertEquals(word.hint(), "hint");
+        assertNotNull(word.hint());
+    }
+
+    @Test
+    void testGetRandomFruitWord() {
+        RandomWordSelector randomWordSelector = new RandomWordSelector();
+        Word word = randomWordSelector.getRandomWordByCategory(Category.FRUITS);
+
+        assertNotNull(word.word());
+        assertEquals(word.category(), Category.FRUITS);
+        assertNotNull(word.hint());
+    }
+
+    @Test
+    void testGetRandomCountryWord() {
+        RandomWordSelector randomWordSelector = new RandomWordSelector();
+        Word word = randomWordSelector.getRandomWordByCategory(Category.COUNTRIES);
+
+        assertNotNull(word.word());
+        assertEquals(word.category(), Category.COUNTRIES);
+        assertNotNull(word.hint());
+    }
+
+    @Test
+    void testGetRandomSportWord() {
+        RandomWordSelector randomWordSelector = new RandomWordSelector();
+        Word word = randomWordSelector.getRandomWordByCategory(Category.SPORTS);
+
+        assertNotNull(word.word());
+        assertEquals(word.category(), Category.SPORTS);
+        assertNotNull(word.hint());
     }
 }
