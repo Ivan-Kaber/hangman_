@@ -1,7 +1,10 @@
 package backend.academy.hangman;
 
+import java.security.SecureRandom;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class WordList {
     private final List<Word> easyAnimals = List.of(
         new Word("лиса", Category.ANIMALS, "Хищник с рыжей шерстью"),
@@ -10,7 +13,6 @@ public class WordList {
         new Word("рысь", Category.ANIMALS, "Кошачий хищник с коротким хвостом"),
         new Word("крот", Category.ANIMALS, "Маленькое животное, которое роет землю")
     );
-
 
     private final List<Word> mediumAnimals = List.of(
         new Word("олень", Category.ANIMALS, "Животное с рогами, обитает в лесах"),
@@ -120,6 +122,18 @@ public class WordList {
         mediumSports,
         hardSports);
 
+    @SuppressWarnings("MagicNumber")
+    public List<List<Word>> getRandomListWords() {
+        return switch (new SecureRandom().nextInt(4)) {
+            case 0 -> animalList;
+            case 1 -> countryList;
+            case 2 -> fruitList;
+            default -> sportList;
+        };
+    }
 
+    public Word getRandomWord(List<Word> words) {
+        return words.get(new SecureRandom().nextInt(words.size()));
+    }
 
 }
