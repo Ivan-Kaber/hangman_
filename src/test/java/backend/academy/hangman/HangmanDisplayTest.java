@@ -1,6 +1,5 @@
 package backend.academy.hangman;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class HangmanDisplayTest {
     ByteArrayOutputStream byteArrayOutputStream;
     HangmanDisplay hangmanDisplay;
@@ -20,17 +20,51 @@ class HangmanDisplayTest {
     }
 
     @Test
+    void testPrintHangmanRemainedNineMistakes() {
+        hangmanDisplay.printHangman(9);
+
+        assertEquals("""
+
+
+
+
+
+
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
+    }
+
+    @Test
+    void testPrintHangmanRemainedEightMistakes() {
+        hangmanDisplay.printHangman(8);
+
+        assertEquals("""
+
+
+             |
+             |
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
+    }
+
+    @Test
     void testPrintHangmanRemainedSevenMistakes() {
         hangmanDisplay.printHangman(7);
 
         assertEquals("""
-                          _____
-                         |
-                         |
-                         |
-                         |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |
+             |
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -38,13 +72,15 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(6);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |
-                         |
-                         |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -52,13 +88,15 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(5);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |
-                         |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -66,13 +104,15 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(4);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |    |
-                         |    |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |    |
+             |    |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -80,13 +120,15 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(3);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|
-                         |    |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|
+             |    |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -94,13 +136,15 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(2);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|\\
-                         |    |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|\\
+             |    |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -108,13 +152,15 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(1);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|\\
-                         |    |
-                         |   /
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|\\
+             |    |
+             |   /
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -122,18 +168,20 @@ class HangmanDisplayTest {
         hangmanDisplay.printHangman(0);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|\\
-                         |    |
-                         |   / \\
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|\\
+             |    |
+             |   / \\
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
     void testPrintHangmanRemainedMOreThenSevenMistakesException() {
-        assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(8));
+        assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(10));
     }
 
     @Test
