@@ -83,11 +83,10 @@ public class HangmanDisplay {
     }
 
     public void printHangman(int remainedMistakes) {
-        if(remainedMistakes < 0 || remainedMistakes >= HANGMAN.length) {
+        if (remainedMistakes < 0 || remainedMistakes >= HANGMAN.length) {
             throw new IllegalArgumentException("Remained mistakes must be between 0 and " + (HANGMAN.length - 1));
         }
         out.print(HANGMAN[HANGMAN.length - remainedMistakes - 1]);
     }
-
 
 }
