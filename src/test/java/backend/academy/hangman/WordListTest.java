@@ -14,10 +14,10 @@ class WordListTest {
             List<List<Word>> result = wordList.getRandomListWords();
 
             assertThat(result).isIn(
-                wordList.animalList(),
-                wordList.countryList(),
-                wordList.fruitList(),
-                wordList.sportList()
+                wordList.getAnimalList(),
+                wordList.getCountryList(),
+                wordList.getFruitList(),
+                wordList.getSportList()
             );
         }
     }

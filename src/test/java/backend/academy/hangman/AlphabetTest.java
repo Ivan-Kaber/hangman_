@@ -17,14 +17,14 @@ class AlphabetTest {
     void deleteLetter_letterInLowerCase() {
         String letter = "а";
         alphabet.deleteLetter(letter);
-        assertThat(alphabet.alphabet()[0]).isEqualTo(" ");
+        assertThat(alphabet.getAlphabet()[0]).isEqualTo(" ");
     }
 
     @Test
     void deleteLetter_letterInUpperCase() {
         String letter = "А";
         alphabet.deleteLetter(letter);
-        assertThat(alphabet.alphabet()[0]).isEqualTo(" ");
+        assertThat(alphabet.getAlphabet()[0]).isEqualTo(" ");
     }
 
     @Test
@@ -32,7 +32,7 @@ class AlphabetTest {
         Alphabet alphabet1 = new Alphabet();
         String letter = "z";
         alphabet.deleteLetter(letter);
-        assertThat(alphabet.alphabet()).isEqualTo(alphabet1.alphabet());
+        assertThat(alphabet.getAlphabet()).isEqualTo(alphabet1.getAlphabet());
     }
 
     @Test

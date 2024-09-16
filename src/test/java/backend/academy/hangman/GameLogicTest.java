@@ -31,39 +31,39 @@ class GameLogicTest {
     void selectCategory_animal() {
         gameLogic.selectCategory("1");
 
-        assertThat(gameLogic.listWords()).isEqualTo(wordList.animalList());
+        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getAnimalList());
     }
 
     @Test
     void selectCategory_country() {
         gameLogic.selectCategory("2");
 
-        assertThat(gameLogic.listWords()).isEqualTo(wordList.countryList());
+        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getCountryList());
     }
 
     @Test
     void selectCategory_fruit() {
         gameLogic.selectCategory("3");
 
-        assertThat(gameLogic.listWords()).isEqualTo(wordList.fruitList());
+        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getFruitList());
     }
 
     @Test
     void selectCategory_sport() {
         gameLogic.selectCategory("4");
 
-        assertThat(gameLogic.listWords()).isEqualTo(wordList.sportList());
+        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getSportList());
     }
 
     @Test
     void selectCategory_random() {
         gameLogic.selectCategory("5");
 
-        assertThat(gameLogic.listWords()).isIn(
-            wordList.animalList(),
-            wordList.countryList(),
-            wordList.fruitList(),
-            wordList.sportList()
+        assertThat(gameLogic.getListWords()).isIn(
+            wordList.getAnimalList(),
+            wordList.getCountryList(),
+            wordList.getFruitList(),
+            wordList.getSportList()
         );
     }
 
@@ -78,7 +78,7 @@ class GameLogicTest {
 
         assertThat(captor.getValue()).contains("Вы ввели неверные данные, попробуйте ещё раз, "
             + "введите одну цифру - желаемую категорию: ");
-        assertThat(gameLogic.listWords()).isEqualTo(wordList.animalList());
+        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getAnimalList());
     }
 
     @Test
@@ -87,7 +87,7 @@ class GameLogicTest {
 
         gameLogic.selectLvl("1");
 
-        assertThat(gameLogic.words()).isEqualTo(wordList.animalList().get(0));
+        assertThat(gameLogic.getWords()).isEqualTo(wordList.getAnimalList().get(0));
     }
 
     @Test
@@ -96,7 +96,7 @@ class GameLogicTest {
 
         gameLogic.selectLvl("2");
 
-        assertThat(gameLogic.words()).isEqualTo(wordList.countryList().get(1));
+        assertThat(gameLogic.getWords()).isEqualTo(wordList.getCountryList().get(1));
     }
 
     @Test
@@ -105,7 +105,7 @@ class GameLogicTest {
 
         gameLogic.selectLvl("3");
 
-        assertThat(gameLogic.words()).isEqualTo(wordList.fruitList().get(2));
+        assertThat(gameLogic.getWords()).isEqualTo(wordList.getFruitList().get(2));
     }
 
     @Test
@@ -114,10 +114,10 @@ class GameLogicTest {
 
         gameLogic.selectLvl("4");
 
-        assertThat(gameLogic.words()).isIn(
-            wordList.animalList().get(0),
-            wordList.animalList().get(1),
-            wordList.animalList().get(2)
+        assertThat(gameLogic.getWords()).isIn(
+            wordList.getAnimalList().get(0),
+            wordList.getAnimalList().get(1),
+            wordList.getAnimalList().get(2)
         );
     }
 
@@ -135,7 +135,7 @@ class GameLogicTest {
         assertThat(captor.getValue()).contains("Вы ввели неверные данные, попробуйте ещё раз, "
             + "введите одну цифру - желаемый уровень сложности: ");
 
-        assertThat(gameLogic.words()).isEqualTo(wordList.animalList().get(0));
+        assertThat(gameLogic.getWords()).isEqualTo(wordList.getAnimalList().get(0));
     }
 
     @Test
@@ -146,8 +146,8 @@ class GameLogicTest {
 
         gameLogic.chooseRandomWord();
 
-        assertThat(gameLogic.word().word().length())
-            .isBetween(GameLogic.MIN_WORD_LENGTH(), GameLogic.MAX_WORD_LENGTH());
+        assertThat(gameLogic.getWord().word().length())
+            .isBetween(GameLogic.getMIN_WORD_LENGTH(), GameLogic.getMAX_WORD_LENGTH());
     }
 
     @Test
@@ -161,11 +161,11 @@ class GameLogicTest {
             new Word("validWord", Category.ANIMALS, "valid")
         );
 
-        gameLogic.words(wordList);
+        gameLogic.setWords(wordList);
 
         gameLogic.chooseRandomWord();
 
-        Word chosenWord = gameLogic.word();
+        Word chosenWord = gameLogic.getWord();
         assertThat(chosenWord).isNotNull();
         assertThat(chosenWord.word()).isEqualTo("validWord");
     }
@@ -175,17 +175,17 @@ class GameLogicTest {
         hiddenWord = mock(HiddenWord.class);
         when(hiddenWord.isWin()).thenReturn(true);
 
-        gameLogic.hiddenWord(hiddenWord);
+        gameLogic.setHiddenWord(hiddenWord);
 
         assertThat(gameLogic.isGameOver()).isTrue();
     }
 
     @Test
     void isGameOver_lose() {
-        gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
+        gameLogic.setWords(List.of(new Word("validWord", Category.ANIMALS, "valid")));
         gameLogic.chooseRandomWord();
 
-        gameLogic.remainedMistakes(0);
+        gameLogic.setRemainedMistakes(0);
 
         assertThat(gameLogic.isGameOver()).isTrue();
     }
@@ -195,28 +195,28 @@ class GameLogicTest {
         hiddenWord = mock(HiddenWord.class);
         when(hiddenWord.isWin()).thenReturn(false);
 
-        gameLogic.hiddenWord(hiddenWord);
-        gameLogic.remainedMistakes(3);
+        gameLogic.setHiddenWord(hiddenWord);
+        gameLogic.setRemainedMistakes(3);
 
         assertThat(gameLogic.isGameOver()).isFalse();
     }
 
     @Test
     void isLose_true() {
-        gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
+        gameLogic.setWords(List.of(new Word("validWord", Category.ANIMALS, "valid")));
         gameLogic.chooseRandomWord();
 
-        gameLogic.remainedMistakes(0);
+        gameLogic.setRemainedMistakes(0);
 
         assertThat(gameLogic.isLose()).isTrue();
     }
 
     @Test
     void isLose_false() {
-        gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
+        gameLogic.setWords(List.of(new Word("validWord", Category.ANIMALS, "valid")));
         gameLogic.chooseRandomWord();
 
-        gameLogic.remainedMistakes(1);
+        gameLogic.setRemainedMistakes(1);
 
         assertThat(gameLogic.isLose()).isFalse();
     }

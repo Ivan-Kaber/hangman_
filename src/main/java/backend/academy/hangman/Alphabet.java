@@ -2,7 +2,8 @@ package backend.academy.hangman;
 
 import lombok.Getter;
 
-@Getter public class Alphabet {
+@Getter
+public class Alphabet {
     private final String[] alphabet = {"а", "б", "в", "г", "д", "е", "ж",
         "з", "и", "й", "к", "л", "м", "н", "о",
         "п", "р", "с", "т", "у", "ф", "х", "ц",

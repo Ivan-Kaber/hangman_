@@ -10,7 +10,7 @@ public class HiddenWord {
     private final String[] hiddenWord;
     private final PrintStream out;
     private final Set<String> hiddenWordLetters;
-    private final Set<String> alreadyUsedLetters = new HashSet<>();
+    private final Set<String> alreadyUsedLetters;
     private int countLetters = 0;
 
     public HiddenWord(String word, PrintStream out) {
@@ -18,6 +18,8 @@ public class HiddenWord {
         this.word = word.toLowerCase();
         hiddenWord = new String[word.length()];
         Arrays.fill(hiddenWord, "_");
+        alreadyUsedLetters = new HashSet<>();
+
         hiddenWordLetters = new HashSet<>(word.length());
         for (char c : this.word.toCharArray()) {
             hiddenWordLetters.add(String.valueOf(c));
