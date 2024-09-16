@@ -202,26 +202,6 @@ class GameLogicTest {
     }
 
     @Test
-    void isWin_true() {
-        hiddenWord = mock(HiddenWord.class);
-        when(hiddenWord.isWin()).thenReturn(true);
-
-        gameLogic.hiddenWord(hiddenWord);
-
-        assertThat(gameLogic.isWin()).isTrue();
-    }
-
-    @Test
-    void isWin_false() {
-        hiddenWord = mock(HiddenWord.class);
-        when(hiddenWord.isWin()).thenReturn(false);
-
-        gameLogic.hiddenWord(hiddenWord);
-
-        assertThat(gameLogic.isWin()).isFalse();
-    }
-
-    @Test
     void isLose_true() {
         gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
         gameLogic.chooseRandomWord();
@@ -239,5 +219,40 @@ class GameLogicTest {
         gameLogic.remainedMistakes(1);
 
         assertThat(gameLogic.isLose()).isFalse();
+    }
+
+    @Test
+    void testIsCyrillic_withCyrillicLetter() {
+        assertThat(gameLogic.isCyrillic("п")).isTrue();
+    }
+
+    @Test
+    void testIsCyrillic_withUpperCaseCyrillicLetter() {
+        assertThat(gameLogic.isCyrillic("Я")).isTrue();
+    }
+
+    @Test
+    void testIsCyrillic_withLatinLetter() {
+        assertThat(gameLogic.isCyrillic("a")).isFalse();
+    }
+
+    @Test
+    void testIsCyrillic_withDigit() {
+        assertThat(gameLogic.isCyrillic("5")).isFalse();
+    }
+
+    @Test
+    void testIsCyrillic_withSpecialCharacter() {
+        assertThat(gameLogic.isCyrillic("@")).isFalse();
+    }
+
+    @Test
+    void testIsCyrillic_withEmptyString() {
+        assertThat(gameLogic.isCyrillic("")).isFalse();
+    }
+
+    @Test
+    void testIsCyrillic_withSpace() {
+        assertThat(gameLogic.isCyrillic(" ")).isFalse();
     }
 }

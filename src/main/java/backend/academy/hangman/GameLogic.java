@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,7 @@ public class GameLogic {
     private HiddenWord hiddenWord;
     @Setter
     private int remainedMistakes;
+    private final Alphabet alphabet;
 
     public GameLogic(PrintStream out, Scanner scanner) {
         this.out = out;
@@ -35,6 +37,7 @@ public class GameLogic {
         this.scanner = scanner;
         random = new SecureRandom();
         remainedMistakes = MAX_MISTAKES;
+        alphabet = new Alphabet();
 
     }
 
@@ -90,5 +93,14 @@ public class GameLogic {
     public boolean isLose() {
         return remainedMistakes == 0;
     }
+
+    public String getAlphabetState() {
+        return alphabet.toString();
+    }
+
+    public boolean isCyrillic(String letter) {
+        return (Pattern.compile("[а-яА-Я]").matcher(letter).matches());
+    }
+
 
 }
