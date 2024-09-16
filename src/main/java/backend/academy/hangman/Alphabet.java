@@ -3,14 +3,14 @@ package backend.academy.hangman;
 import lombok.Getter;
 
 @Getter public class Alphabet {
-    private final String[] alphabet = {"а", "б", "в", "г", "д", "е", "ё", "ж",
-        "з", "и", "й", "к", "л", "м", "н", "о",
+    private final String[] alphabet = {"а", "б", "в", "г", "д", "е", "ж",
+        "з", "и", "й", "к", "л", "м", "н", "о",
         "п", "р", "с", "т", "у", "ф", "х", "ц",
         "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"};
 
     public void deleteLetter(String letter) {
         for (int i = 0; i < alphabet.length; i++) {
-            if (alphabet[i].equals(letter.toLowerCase())) {
+            if (alphabet[i].equalsIgnoreCase(letter.replace("й", "й"))) {
                 alphabet[i] = " ";
             }
         }
@@ -21,7 +21,7 @@ import lombok.Getter;
         StringBuilder builder = new StringBuilder();
 
         @SuppressWarnings("MagicNumber")
-        int[] rowLengths = {7, 7, 7, 7, 5};
+        int[] rowLengths = {7, 7, 7, 7, 4};
         int startIndex = 0;
 
         for (int rowLength : rowLengths) {

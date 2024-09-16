@@ -37,14 +37,14 @@ class AlphabetTest {
 
     @Test
     void testToString() {
-        String expected = "а б в г д е ё\nж з и й к л м\nн о п р с т у\nф х ц ч ш щ ъ\nы ь э ю я\n";
+        String expected = "а б в г д е ж\nз и й к л м н\nо п р с т у ф\nх ц ч ш щ ъ ы\nь э ю я\n";
         assertThat(alphabet.toString()).isEqualTo(expected);
     }
 
     @Test
     void testToStringAfterDeleteLetter() {
         String letter = "а";
-        String expected = "  б в г д е ё\nж з и й к л м\nн о п р с т у\nф х ц ч ш щ ъ\nы ь э ю я\n";
+        String expected = "  б в г д е ж\nз и й к л м н\nо п р с т у ф\nх ц ч ш щ ъ ы\nь э ю я\n";
         alphabet.deleteLetter(letter);
         assertThat(alphabet.toString()).isEqualTo(expected);
     }
