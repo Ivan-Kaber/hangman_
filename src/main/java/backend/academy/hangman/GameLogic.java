@@ -30,6 +30,7 @@ public class GameLogic {
     @Setter
     private int remainedMistakes;
     private final Alphabet alphabet;
+    private final HangmanDisplay hangmanDisplay;
 
     public GameLogic(PrintStream out, Scanner scanner) {
         this.out = out;
@@ -38,6 +39,7 @@ public class GameLogic {
         random = new SecureRandom();
         remainedMistakes = MAX_MISTAKES;
         alphabet = new Alphabet();
+        hangmanDisplay = new HangmanDisplay(out);
 
     }
 
@@ -100,6 +102,18 @@ public class GameLogic {
 
     public boolean isCyrillic(String letter) {
         return (Pattern.compile("[а-яА-Я]").matcher(letter).matches());
+    }
+
+    public boolean isAlreadyUsed(String letter) {
+        return hiddenWord.isAlreadyUsed(letter);
+    }
+
+    public void printHiddenWord() {
+        hiddenWord.printHiddenWord();
+    }
+
+    public void printHangman() {
+        hangmanDisplay.printHangman(remainedMistakes);
     }
 
 
