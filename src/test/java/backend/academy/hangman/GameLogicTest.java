@@ -28,35 +28,35 @@ class GameLogicTest {
     }
 
     @Test
-    void selectAnimalCategory() {
+    void selectCategory_animal() {
         gameLogic.selectCategory("1");
 
         assertThat(gameLogic.listWords()).isEqualTo(wordList.animalList());
     }
 
     @Test
-    void selectCountryCategory() {
+    void selectCategory_country() {
         gameLogic.selectCategory("2");
 
         assertThat(gameLogic.listWords()).isEqualTo(wordList.countryList());
     }
 
     @Test
-    void selectFruitCategory() {
+    void selectCategory_fruit() {
         gameLogic.selectCategory("3");
 
         assertThat(gameLogic.listWords()).isEqualTo(wordList.fruitList());
     }
 
     @Test
-    void selectSportCategory() {
+    void selectCategory_sport() {
         gameLogic.selectCategory("4");
 
         assertThat(gameLogic.listWords()).isEqualTo(wordList.sportList());
     }
 
     @Test
-    void selectRandomCategory() {
+    void selectCategory_random() {
         gameLogic.selectCategory("5");
 
         assertThat(gameLogic.listWords()).isIn(
@@ -68,7 +68,7 @@ class GameLogicTest {
     }
 
     @Test
-    void selectWrongCategoryThenAnimal() {
+    void selectCategory_selectWrongCategoryThenAnimal() {
         when(scanner.nextLine()).thenReturn("invalid", "1");
 
         gameLogic.selectCategory("invalid");
@@ -82,7 +82,7 @@ class GameLogicTest {
     }
 
     @Test
-    void selectEasyLevel() {
+    void selectLvl_easy() {
         gameLogic.selectCategory("1");
 
         gameLogic.selectLvl("1");
@@ -91,7 +91,7 @@ class GameLogicTest {
     }
 
     @Test
-    void selectMediumLevel() {
+    void selectLvl_medium() {
         gameLogic.selectCategory("2");
 
         gameLogic.selectLvl("2");
@@ -100,7 +100,7 @@ class GameLogicTest {
     }
 
     @Test
-    void selectHardLevel() {
+    void selectLvl_hard() {
         gameLogic.selectCategory("3");
 
         gameLogic.selectLvl("3");
@@ -109,7 +109,7 @@ class GameLogicTest {
     }
 
     @Test
-    void selectRandomLevel() {
+    void selectLvl_random() {
         gameLogic.selectCategory("1");
 
         gameLogic.selectLvl("4");
@@ -122,7 +122,7 @@ class GameLogicTest {
     }
 
     @Test
-    void selectWrongLevelThenEasy() {
+    void selectLvl_selectWrongLevelThenEasy() {
         when(scanner.nextLine()).thenReturn("invalid", "1");
 
         gameLogic.selectCategory("1");
@@ -222,37 +222,37 @@ class GameLogicTest {
     }
 
     @Test
-    void testIsCyrillic_withCyrillicLetter() {
+    void isCyrillic_withCyrillicLetter() {
         assertThat(gameLogic.isCyrillic("п")).isTrue();
     }
 
     @Test
-    void testIsCyrillic_withUpperCaseCyrillicLetter() {
+    void isCyrillic_withUpperCaseCyrillicLetter() {
         assertThat(gameLogic.isCyrillic("Я")).isTrue();
     }
 
     @Test
-    void testIsCyrillic_withLatinLetter() {
+    void isCyrillic_withLatinLetter() {
         assertThat(gameLogic.isCyrillic("a")).isFalse();
     }
 
     @Test
-    void testIsCyrillic_withDigit() {
+    void isCyrillic_withDigit() {
         assertThat(gameLogic.isCyrillic("5")).isFalse();
     }
 
     @Test
-    void testIsCyrillic_withSpecialCharacter() {
+    void isCyrillic_withSpecialCharacter() {
         assertThat(gameLogic.isCyrillic("@")).isFalse();
     }
 
     @Test
-    void testIsCyrillic_withEmptyString() {
+    void isCyrillic_withEmptyString() {
         assertThat(gameLogic.isCyrillic("")).isFalse();
     }
 
     @Test
-    void testIsCyrillic_withSpace() {
+    void isCyrillic_withSpace() {
         assertThat(gameLogic.isCyrillic(" ")).isFalse();
     }
 }

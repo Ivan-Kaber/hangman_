@@ -9,7 +9,7 @@ class WordListTest {
     private final WordList wordList = new WordList();
 
     @Test
-    void testGetRandomListWords() {
+    void getRandomListWords_shouldReturnValidList() {
         for (int i = 0; i < 100; i++) {
             List<List<Word>> result = wordList.getRandomListWords();
 
@@ -23,7 +23,7 @@ class WordListTest {
     }
 
     @Test
-    void testGetOnlyOneWord() {
+    void getRandomWord_checkCertainWord() {
         List<Word> list = List.of(
             new Word("лиса", Category.ANIMALS, "Хищник с рыжей шерстью")
         );
@@ -33,7 +33,7 @@ class WordListTest {
     }
 
     @RepeatedTest(10)
-    void testRandomWordShouldBeValid() {
+    void getRandomWord_checkRandomWord() {
         List<List<Word>> randomList = wordList.getRandomListWords();
         Word randomWord = wordList.getRandomWord(randomList.getFirst());
 

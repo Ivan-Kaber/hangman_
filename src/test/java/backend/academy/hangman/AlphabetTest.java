@@ -14,21 +14,21 @@ class AlphabetTest {
 
 
     @Test
-    void testDeleteLetter() {
+    void deleteLetter_letterInLowerCase() {
         String letter = "а";
         alphabet.deleteLetter(letter);
         assertThat(alphabet.alphabet()[0]).isEqualTo(" ");
     }
 
     @Test
-    void testDeleteLetterIgnoreCase() {
+    void deleteLetter_letterInUpperCase() {
         String letter = "А";
         alphabet.deleteLetter(letter);
         assertThat(alphabet.alphabet()[0]).isEqualTo(" ");
     }
 
     @Test
-    void testDeleteLetterNotFound() {
+    void deleteLetter_letterNotFound() {
         Alphabet alphabet1 = new Alphabet();
         String letter = "z";
         alphabet.deleteLetter(letter);
@@ -36,13 +36,13 @@ class AlphabetTest {
     }
 
     @Test
-    void testToString() {
+    void toString_allAlphabet() {
         String expected = "а б в г д е ж\nз и й к л м н\nо п р с т у ф\nх ц ч ш щ ъ ы\nь э ю я\n";
         assertThat(alphabet.toString()).isEqualTo(expected);
     }
 
     @Test
-    void testToStringAfterDeleteLetter() {
+    void toString_deleteOneLetter() {
         String letter = "а";
         String expected = "  б в г д е ж\nз и й к л м н\nо п р с т у ф\nх ц ч ш щ ъ ы\nь э ю я\n";
         alphabet.deleteLetter(letter);

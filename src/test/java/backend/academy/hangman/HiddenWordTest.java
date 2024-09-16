@@ -20,7 +20,7 @@ class HiddenWordTest {
     }
 
     @Test
-    void testPrintHiddenWordHiddenWord() {
+    void printHiddenWord() {
         hiddenWord.printHiddenWord();
 
         assertThat("______").isEqualTo(byteArrayOutputStream.toString());

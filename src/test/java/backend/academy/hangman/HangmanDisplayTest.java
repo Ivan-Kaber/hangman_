@@ -20,7 +20,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedNineMistakes() {
+    void printHangman_remainedNineMistakes() {
         hangmanDisplay.printHangman(9);
 
         assertEquals("""
@@ -36,7 +36,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedEightMistakes() {
+    void printHangman_remainedEightMistakes() {
         hangmanDisplay.printHangman(8);
 
         assertEquals("""
@@ -52,7 +52,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedSevenMistakes() {
+    void printHangman_remainedSevenMistakes() {
         hangmanDisplay.printHangman(7);
 
         assertEquals("""
@@ -68,7 +68,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedSixMistakes() {
+    void printHangman_remainedSixMistakes() {
         hangmanDisplay.printHangman(6);
 
         assertEquals("""
@@ -84,7 +84,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedFiveMistakes() {
+    void printHangman_remainedFiveMistakes() {
         hangmanDisplay.printHangman(5);
 
         assertEquals("""
@@ -100,7 +100,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedFourMistakes() {
+    void printHangman_remainedFourMistakes() {
         hangmanDisplay.printHangman(4);
 
         assertEquals("""
@@ -116,7 +116,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedThreeMistakes() {
+    void printHangman_remainedThreeMistakes() {
         hangmanDisplay.printHangman(3);
 
         assertEquals("""
@@ -132,7 +132,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedTwoMistakes() {
+    void printHangman_remainedTwoMistakes() {
         hangmanDisplay.printHangman(2);
 
         assertEquals("""
@@ -148,7 +148,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedOneMistakes() {
+    void printHangman_remainedOneMistakes() {
         hangmanDisplay.printHangman(1);
 
         assertEquals("""
@@ -164,7 +164,7 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedZeroMistakes() {
+    void printHangman_remainedZeroMistakes() {
         hangmanDisplay.printHangman(0);
 
         assertEquals("""
@@ -180,12 +180,12 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedMOreThenSevenMistakesException() {
+    void printHangman_remainedMoreThanNineMistakesException() {
         assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(10));
     }
 
     @Test
-    void testPrintHangmanRemainedLessThenZeroMistakesException() {
+    void printHangman_remainedLessThanZeroMistakesException() {
         assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(-1));
     }
 
