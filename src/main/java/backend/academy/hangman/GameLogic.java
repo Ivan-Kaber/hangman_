@@ -8,48 +8,42 @@ import java.util.regex.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter @Getter
 public class GameLogic {
     @Getter
     private static final int MIN_WORD_LENGTH = 3;
     @Getter
     private static final int MAX_WORD_LENGTH = 20;
-    private static final int MAX_MISTAKES = 6;
-    private final PrintStream out;
-    @Getter
-    private List<List<Word>> listWords;
-    private WordList wordList;
-    private final Scanner scanner;
-    @Getter
-    @Setter
-    private List<Word> words;
-    private final SecureRandom random;
-    @Getter
-    private Word word;
-    @Setter
-    private HiddenWord hiddenWord;
-    @Setter
-    private int remainedMistakes;
-    private final Alphabet alphabet;
+    private static final int MAX_MISTAKES = 6; //рекомендуемое количество ошибок от 6 до 9
     private final HangmanDisplay hangmanDisplay;
+    private final SecureRandom random;
+    private final Alphabet alphabet;
+    private final PrintStream out;
+    private final Scanner scanner;
+    private List<List<Word>> listWords;
+    private List<Word> words;
+    private HiddenWord hiddenWord;
+    private WordList wordList;
+    private Word word;
+    private int remainedMistakes;
 
     public GameLogic(PrintStream out, Scanner scanner) {
         this.out = out;
-        wordList = new WordList();
         this.scanner = scanner;
+        wordList = new WordList();
         random = new SecureRandom();
-        remainedMistakes = MAX_MISTAKES;
         alphabet = new Alphabet();
         hangmanDisplay = new HangmanDisplay(out);
-
+        remainedMistakes = MAX_MISTAKES;
     }
 
     public void selectCategory(String choiceCategory) {
         String category = choiceCategory;
         switch (category) {
-            case "1" -> listWords = new WordList().animalList();
-            case "2" -> listWords = new WordList().countryList();
-            case "3" -> listWords = new WordList().fruitList();
-            case "4" -> listWords = new WordList().sportList();
+            case "1" -> listWords = new WordList().getAnimalList();
+            case "2" -> listWords = new WordList().getCountryList();
+            case "3" -> listWords = new WordList().getFruitList();
+            case "4" -> listWords = new WordList().getSportList();
             case "5" -> listWords = new WordList().getRandomListWords();
             default -> {
                 out.print("Вы ввели неверные данные, "
@@ -116,5 +110,15 @@ public class GameLogic {
         hangmanDisplay.printHangman(remainedMistakes);
     }
 
+    public void handleGuess(String letter) {
+        alphabet.deleteLetter(letter);
+        hiddenWord.fillAlreadyUsedLetters(letter);
 
+        if (!hiddenWord.containsLetter(letter)) {
+            remainedMistakes--;
+            out.println("\nНеверно");
+        } else {
+            hiddenWord.updateHiddenWord();
+        }
+    }
 }
