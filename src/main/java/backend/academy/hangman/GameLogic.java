@@ -5,16 +5,25 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Scanner;
 import lombok.Getter;
+import lombok.Setter;
 
 public class GameLogic {
+    @Getter
+    private static final int MIN_WORD_LENGTH = 3;
+    @Getter
+    private static final int MAX_WORD_LENGTH = 20;
     private final PrintStream out;
     @Getter
     private List<List<Word>> listWords;
-    private final WordList wordList;
+    private WordList wordList;
     private final Scanner scanner;
     @Getter
+    @Setter
     private List<Word> words;
     private final SecureRandom random;
+    @Getter
+    private Word word;
+    private HiddenWord hiddenWord;
 
     public GameLogic(PrintStream out, Scanner scanner) {
         this.out = out;
@@ -34,7 +43,7 @@ public class GameLogic {
             case "5" -> listWords = new WordList().getRandomListWords();
             default -> {
                 out.print("Вы ввели неверные данные, "
-                        + "попробуйте ещё раз, введите одну цифру - желаемую категорию: ");
+                    + "попробуйте ещё раз, введите одну цифру - желаемую категорию: ");
                 category = scanner.nextLine();
                 selectCategory(category);
             }
@@ -51,11 +60,18 @@ public class GameLogic {
             case "4" -> words = listWords.get(random.nextInt(3));
             default -> {
                 out.print("Вы ввели неверные данные, попробуйте ещё раз, "
-                        + "введите одну цифру - желаемый уровень сложности: ");
+                    + "введите одну цифру - желаемый уровень сложности: ");
                 lvl = scanner.nextLine();
                 selectLvl(lvl);
             }
         }
+    }
+
+    public void chooseRandomWord() {
+        do {
+            word = wordList.getRandomWord(words);
+        } while (word.word().length() <= MIN_WORD_LENGTH || word.word().length() >= MAX_WORD_LENGTH);
+        hiddenWord = new HiddenWord(word.word(), out);
     }
 
 }

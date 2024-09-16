@@ -1,6 +1,7 @@
 package backend.academy.hangman;
 
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -134,6 +135,43 @@ class GameLogicTest {
             + "введите одну цифру - желаемый уровень сложности: ");
 
         assertThat(gameLogic.words()).isEqualTo(wordList.animalList().get(0));
+    }
+
+    @Test
+    void chooseRandomWord_validWordLength() {
+        gameLogic.selectCategory("1");
+
+        gameLogic.selectLvl("3");
+
+        gameLogic.chooseRandomWord();
+
+        assertThat(gameLogic.word().word().length())
+            .isBetween(GameLogic.MIN_WORD_LENGTH(), GameLogic.MAX_WORD_LENGTH());
+    }
+
+    @Test
+    void chooseRandomWord_invalidWordLengthThanValid() {
+        // Создаем экземпляр GameLogic
+        gameLogic.selectCategory("1"); // Выбираем категорию животных (например)
+        gameLogic.selectLvl("1");      // Выбираем уровень сложности (например)
+
+        // Реальный список слов (вместо мока)
+        List<Word> wordList = List.of(
+            new Word("abc", Category.ANIMALS, "too short"),                // Слишком короткое
+            new Word("superlongwordfgdfgfd", Category.ANIMALS, "too long"), // Слишком длинное
+            new Word("validWord", Category.ANIMALS, "valid")            // Подходящее слово
+        );
+
+        // Устанавливаем этот список в игру, чтобы он использовался в методе chooseRandomWord
+        gameLogic.words(wordList);
+
+        // Вызываем метод для выбора случайного слова
+        gameLogic.chooseRandomWord();
+
+        // Проверяем, что выбрано корректное слово
+        Word chosenWord = gameLogic.word();
+        assertThat(chosenWord).isNotNull();         // Проверка, что слово не null
+        assertThat(chosenWord.word()).isEqualTo("validWord"); // Ожидаем, что будет выбрано "validWord"
     }
 
 }

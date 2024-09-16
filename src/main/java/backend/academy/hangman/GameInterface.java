@@ -38,5 +38,7 @@ public class GameInterface {
                 Введите одну цифру - желаемый уровень сложности:\s""");
         choiceLvl = scanner.nextLine();
         gameLogic.selectLvl(choiceLvl);
+
+        gameLogic.chooseRandomWord();
     }
 }
