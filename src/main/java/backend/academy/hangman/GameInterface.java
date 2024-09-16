@@ -27,5 +27,16 @@ public class GameInterface {
                 Введите одну цифру - желаемую категорию:\s""");
         choiceCategory = scanner.nextLine();
         gameLogic.selectCategory(choiceCategory);
+
+        String choiceLvl;
+        out.print("""
+                \nВыберите уровень сложности слова:
+                1)EASY
+                2)MEDIUM
+                3)HARD
+                4)Случайный уровень сложности
+                Введите одну цифру - желаемый уровень сложности:\s""");
+        choiceLvl = scanner.nextLine();
+        gameLogic.selectLvl(choiceLvl);
     }
 }

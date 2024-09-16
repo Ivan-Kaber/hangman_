@@ -1,11 +1,10 @@
 package backend.academy.hangman;
 
+import java.io.PrintStream;
+import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.io.PrintStream;
-import java.util.Scanner;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -25,7 +24,6 @@ class GameLogicTest {
         gameLogic = new GameLogic(out, scanner);
         wordList = new WordList();
     }
-
 
     @Test
     void selectAnimalCategory() {
@@ -77,9 +75,65 @@ class GameLogicTest {
         verify(out, times(2)).print(captor.capture());
 
         assertThat(captor.getValue()).contains("Вы ввели неверные данные, попробуйте ещё раз, "
-                                             + "введите одну цифру - желаемую категорию: ");
+            + "введите одну цифру - желаемую категорию: ");
         assertThat(gameLogic.listWords()).isEqualTo(wordList.animalList());
     }
 
+    @Test
+    void selectEasyLevel() {
+        gameLogic.selectCategory("1");
+
+        gameLogic.selectLvl("1");
+
+        assertThat(gameLogic.words()).isEqualTo(wordList.animalList().get(0));
+    }
+
+    @Test
+    void selectMediumLevel() {
+        gameLogic.selectCategory("2");
+
+        gameLogic.selectLvl("2");
+
+        assertThat(gameLogic.words()).isEqualTo(wordList.countryList().get(1));
+    }
+
+    @Test
+    void selectHardLevel() {
+        gameLogic.selectCategory("3");
+
+        gameLogic.selectLvl("3");
+
+        assertThat(gameLogic.words()).isEqualTo(wordList.fruitList().get(2));
+    }
+
+    @Test
+    void selectRandomLevel() {
+        gameLogic.selectCategory("1");
+
+        gameLogic.selectLvl("4");
+
+        assertThat(gameLogic.words()).isIn(
+            wordList.animalList().get(0),
+            wordList.animalList().get(1),
+            wordList.animalList().get(2)
+        );
+    }
+
+    @Test
+    void selectWrongLevelThenEasy() {
+        when(scanner.nextLine()).thenReturn("invalid", "1");
+
+        gameLogic.selectCategory("1");
+
+        gameLogic.selectLvl("invalid");
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(out, times(2)).print(captor.capture());
+
+        assertThat(captor.getValue()).contains("Вы ввели неверные данные, попробуйте ещё раз, "
+            + "введите одну цифру - желаемый уровень сложности: ");
+
+        assertThat(gameLogic.words()).isEqualTo(wordList.animalList().get(0));
+    }
 
 }

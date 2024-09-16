@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class WordList {
+    private final SecureRandom random;
     private final List<Word> easyAnimals = List.of(
         new Word("лиса", Category.ANIMALS, "Хищник с рыжей шерстью"),
         new Word("лось", Category.ANIMALS, "Крупное животное с большими рогами"),
@@ -122,9 +123,13 @@ public class WordList {
         mediumSports,
         hardSports);
 
+    public WordList() {
+        random = new SecureRandom();
+    }
+
     @SuppressWarnings("MagicNumber")
     public List<List<Word>> getRandomListWords() {
-        return switch (new SecureRandom().nextInt(4)) {
+        return switch (random.nextInt(4)) {
             case 0 -> animalList;
             case 1 -> countryList;
             case 2 -> fruitList;
@@ -133,7 +138,7 @@ public class WordList {
     }
 
     public Word getRandomWord(List<Word> words) {
-        return words.get(new SecureRandom().nextInt(words.size()));
+        return words.get(random.nextInt(words.size()));
     }
 
 }
