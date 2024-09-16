@@ -1,6 +1,5 @@
 package backend.academy.hangman;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class HangmanDisplayTest {
     ByteArrayOutputStream byteArrayOutputStream;
     HangmanDisplay hangmanDisplay;
@@ -20,124 +20,172 @@ class HangmanDisplayTest {
     }
 
     @Test
-    void testPrintHangmanRemainedSevenMistakes() {
+    void printHangman_remainedNineMistakes() {
+        hangmanDisplay.printHangman(9);
+
+        assertEquals("""
+
+
+
+
+
+
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
+    }
+
+    @Test
+    void printHangman_remainedEightMistakes() {
+        hangmanDisplay.printHangman(8);
+
+        assertEquals("""
+
+
+             |
+             |
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
+    }
+
+    @Test
+    void printHangman_remainedSevenMistakes() {
         hangmanDisplay.printHangman(7);
 
         assertEquals("""
-                          _____
-                         |
-                         |
-                         |
-                         |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |
+             |
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedSixMistakes() {
+    void printHangman_remainedSixMistakes() {
         hangmanDisplay.printHangman(6);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |
-                         |
-                         |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedFiveMistakes() {
+    void printHangman_remainedFiveMistakes() {
         hangmanDisplay.printHangman(5);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |
-                         |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |
+             |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedFourMistakes() {
+    void printHangman_remainedFourMistakes() {
         hangmanDisplay.printHangman(4);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |    |
-                         |    |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |    |
+             |    |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedThreeMistakes() {
+    void printHangman_remainedThreeMistakes() {
         hangmanDisplay.printHangman(3);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|
-                         |    |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|
+             |    |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedTwoMistakes() {
+    void printHangman_remainedTwoMistakes() {
         hangmanDisplay.printHangman(2);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|\\
-                         |    |
-                         |
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|\\
+             |    |
+             |
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedOneMistakes() {
+    void printHangman_remainedOneMistakes() {
         hangmanDisplay.printHangman(1);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|\\
-                         |    |
-                         |   /
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|\\
+             |    |
+             |   /
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedZeroMistakes() {
+    void printHangman_remainedZeroMistakes() {
         hangmanDisplay.printHangman(0);
 
         assertEquals("""
-                          _____
-                         |    |
-                         |    O
-                         |   /|\\
-                         |    |
-                         |   / \\
-                        /|\\""", byteArrayOutputStream.toString());
+
+             ______
+             |    |
+             |    O
+             |   /|\\
+             |    |
+             |   / \\
+            /|\\
+            """, byteArrayOutputStream.toString());
     }
 
     @Test
-    void testPrintHangmanRemainedMOreThenSevenMistakesException() {
-        assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(8));
+    void printHangman_remainedMoreThanNineMistakesException() {
+        assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(10));
     }
 
     @Test
-    void testPrintHangmanRemainedLessThenZeroMistakesException() {
+    void printHangman_remainedLessThanZeroMistakesException() {
         assertThrows(IllegalArgumentException.class, () -> hangmanDisplay.printHangman(-1));
     }
 
