@@ -17,6 +17,7 @@ class GameLogicTest {
     private Scanner scanner;
     private GameLogic gameLogic;
     private WordList wordList;
+    private HiddenWord hiddenWord;
 
     @BeforeEach
     void setUp() {
@@ -151,27 +152,92 @@ class GameLogicTest {
 
     @Test
     void chooseRandomWord_invalidWordLengthThanValid() {
-        // Создаем экземпляр GameLogic
-        gameLogic.selectCategory("1"); // Выбираем категорию животных (например)
-        gameLogic.selectLvl("1");      // Выбираем уровень сложности (например)
+        gameLogic.selectCategory("1");
+        gameLogic.selectLvl("1");
 
-        // Реальный список слов (вместо мока)
         List<Word> wordList = List.of(
-            new Word("abc", Category.ANIMALS, "too short"),                // Слишком короткое
-            new Word("superlongwordfgdfgfd", Category.ANIMALS, "too long"), // Слишком длинное
-            new Word("validWord", Category.ANIMALS, "valid")            // Подходящее слово
+            new Word("abc", Category.ANIMALS, "too short"),
+            new Word("superlongwordfgdfgfd", Category.ANIMALS, "too long"),
+            new Word("validWord", Category.ANIMALS, "valid")
         );
 
-        // Устанавливаем этот список в игру, чтобы он использовался в методе chooseRandomWord
         gameLogic.words(wordList);
 
-        // Вызываем метод для выбора случайного слова
         gameLogic.chooseRandomWord();
 
-        // Проверяем, что выбрано корректное слово
         Word chosenWord = gameLogic.word();
-        assertThat(chosenWord).isNotNull();         // Проверка, что слово не null
-        assertThat(chosenWord.word()).isEqualTo("validWord"); // Ожидаем, что будет выбрано "validWord"
+        assertThat(chosenWord).isNotNull();
+        assertThat(chosenWord.word()).isEqualTo("validWord");
     }
 
+    @Test
+    void isGameOver_win() {
+        hiddenWord = mock(HiddenWord.class);
+        when(hiddenWord.isWin()).thenReturn(true);
+
+        gameLogic.hiddenWord(hiddenWord);
+
+        assertThat(gameLogic.isGameOver()).isTrue();
+    }
+
+    @Test
+    void isGameOver_lose() {
+        gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
+        gameLogic.chooseRandomWord();
+
+        gameLogic.remainedMistakes(0);
+
+        assertThat(gameLogic.isGameOver()).isTrue();
+    }
+
+    @Test
+    void isGameOver_notOver() {
+        hiddenWord = mock(HiddenWord.class);
+        when(hiddenWord.isWin()).thenReturn(false);
+
+        gameLogic.hiddenWord(hiddenWord);
+        gameLogic.remainedMistakes(3);
+
+        assertThat(gameLogic.isGameOver()).isFalse();
+    }
+
+    @Test
+    void isWin_true() {
+        hiddenWord = mock(HiddenWord.class);
+        when(hiddenWord.isWin()).thenReturn(true);
+
+        gameLogic.hiddenWord(hiddenWord);
+
+        assertThat(gameLogic.isWin()).isTrue();
+    }
+
+    @Test
+    void isWin_false() {
+        hiddenWord = mock(HiddenWord.class);
+        when(hiddenWord.isWin()).thenReturn(false);
+
+        gameLogic.hiddenWord(hiddenWord);
+
+        assertThat(gameLogic.isWin()).isFalse();
+    }
+
+    @Test
+    void isLose_true() {
+        gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
+        gameLogic.chooseRandomWord();
+
+        gameLogic.remainedMistakes(0);
+
+        assertThat(gameLogic.isLose()).isTrue();
+    }
+
+    @Test
+    void isLose_false() {
+        gameLogic.words(List.of(new Word("validWord", Category.ANIMALS, "valid")));
+        gameLogic.chooseRandomWord();
+
+        gameLogic.remainedMistakes(1);
+
+        assertThat(gameLogic.isLose()).isFalse();
+    }
 }

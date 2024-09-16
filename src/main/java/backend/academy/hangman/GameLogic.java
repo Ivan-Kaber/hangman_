@@ -12,6 +12,7 @@ public class GameLogic {
     private static final int MIN_WORD_LENGTH = 3;
     @Getter
     private static final int MAX_WORD_LENGTH = 20;
+    private static final int MAX_MISTAKES = 6;
     private final PrintStream out;
     @Getter
     private List<List<Word>> listWords;
@@ -23,13 +24,17 @@ public class GameLogic {
     private final SecureRandom random;
     @Getter
     private Word word;
+    @Setter
     private HiddenWord hiddenWord;
+    @Setter
+    private int remainedMistakes;
 
     public GameLogic(PrintStream out, Scanner scanner) {
         this.out = out;
         wordList = new WordList();
         this.scanner = scanner;
         random = new SecureRandom();
+        remainedMistakes = MAX_MISTAKES;
 
     }
 
@@ -72,6 +77,18 @@ public class GameLogic {
             word = wordList.getRandomWord(words);
         } while (word.word().length() <= MIN_WORD_LENGTH || word.word().length() >= MAX_WORD_LENGTH);
         hiddenWord = new HiddenWord(word.word(), out);
+    }
+
+    public boolean isGameOver() {
+        return isWin() || isLose();
+    }
+
+    public boolean isWin() {
+        return hiddenWord.isWin();
+    }
+
+    public boolean isLose() {
+        return remainedMistakes == 0;
     }
 
 }
