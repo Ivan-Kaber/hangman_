@@ -24,14 +24,12 @@ public class GameLogic {
     private List<List<Word>> listWords;
     private List<Word> words;
     private HiddenWord hiddenWord;
-    private WordList wordList;
     private Word word;
     private int remainedMistakes;
 
     public GameLogic(PrintStream out, Scanner scanner) {
         this.out = out;
         this.scanner = scanner;
-        wordList = new WordList();
         random = new SecureRandom();
         alphabet = new Alphabet();
         hangmanDisplay = new HangmanDisplay(out);
@@ -48,11 +46,11 @@ public class GameLogic {
         }
 
         switch (category) {
-            case ANIMALS -> listWords = new WordList().getAnimalList();
-            case COUNTRIES -> listWords = new WordList().getCountryList();
-            case FRUITS -> listWords = new WordList().getFruitList();
-            case SPORTS -> listWords = new WordList().getSportList();
-            case RANDOM -> listWords = new WordList().getRandomListWords();
+            case ANIMALS -> listWords = WordList.getAnimalList();
+            case COUNTRIES -> listWords = WordList.getCountryList();
+            case FRUITS -> listWords = WordList.getFruitList();
+            case SPORTS -> listWords = WordList.getSportList();
+            case RANDOM -> listWords = WordList.getRandomListWords();
             case null -> {
                 out.print("Вы ввели неверные данные, "
                     + "попробуйте ещё раз, введите одну цифру - желаемую категорию: ");
@@ -80,7 +78,7 @@ public class GameLogic {
 
     public void chooseRandomWord() {
         do {
-            word = wordList.getRandomWord(words);
+            word = WordList.getRandomWord(words);
         } while (word.word().length() <= MIN_WORD_LENGTH || word.word().length() >= MAX_WORD_LENGTH);
         hiddenWord = new HiddenWord(word.word(), out);
     }
