@@ -18,14 +18,10 @@ public class GameInterface {
 
     public void startGame() {
         String choiceCategory;
-        out.print("""
+        out.printf("""
             Выберите категорию слов
-            1)Животные
-            2)Страны
-            3)Фрукты
-            4)Виды спорта
-            5)Случайная категория
-            Введите одну цифру - желаемую категорию:\s""");
+            %s
+            Введите одну цифру - желаемую категорию:\s""", Category.getOrderView());
         choiceCategory = scanner.nextLine();
         gameLogic.selectCategory(choiceCategory);
 
