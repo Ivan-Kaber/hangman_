@@ -19,4 +19,11 @@ public enum Difficulty {
             .map(c -> String.format("%s) %s", c.id, c.title))
             .collect(Collectors.joining(System.lineSeparator()));
     }
+
+    public static Difficulty getById(int i) {
+        return Arrays.stream(values())
+            .filter(c -> c.id == i)
+            .findFirst()
+            .orElse(null);
+    }
 }

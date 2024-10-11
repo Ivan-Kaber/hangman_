@@ -59,19 +59,24 @@ public class GameLogic {
         }
     }
 
-    @SuppressWarnings("MagicNumber")
     public void selectLvl(String choiceLvl) {
-        String lvl = choiceLvl;
-        switch (lvl) {
-            case "1" -> words = listWords.get(0);
-            case "2" -> words = listWords.get(1);
-            case "3" -> words = listWords.get(2);
-            case "4" -> words = listWords.get(random.nextInt(3));
-            default -> {
+        Difficulty difficulty;
+        if(StringUtils.isNumeric(choiceLvl)) {
+            difficulty = Difficulty.getById(Integer.parseInt(choiceLvl));
+        }
+        else {
+            difficulty = null;
+        }
+
+        switch (difficulty) {
+            case EASY -> words = listWords.get(0);
+            case MEDIUM -> words = listWords.get(1);
+            case HARD -> words = listWords.get(2);
+            case RANDOM -> words = listWords.get(random.nextInt(3));
+            case null -> {
                 out.print("Вы ввели неверные данные, попробуйте ещё раз, "
                     + "введите одну цифру - желаемый уровень сложности: ");
-                lvl = scanner.nextLine();
-                selectLvl(lvl);
+                selectLvl(scanner.nextLine());
             }
         }
     }
