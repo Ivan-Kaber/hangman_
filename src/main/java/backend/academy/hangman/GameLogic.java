@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 @Setter @Getter
 public class GameLogic {
@@ -38,18 +39,24 @@ public class GameLogic {
     }
 
     public void selectCategory(String choiceCategory) {
-        String category = choiceCategory;
+        Category category;
+        if(StringUtils.isNumeric(choiceCategory)) {
+            category = Category.getById(Integer.parseInt(choiceCategory));
+        }
+        else {
+            category = null;
+        }
+
         switch (category) {
-            case "1" -> listWords = new WordList().getAnimalList();
-            case "2" -> listWords = new WordList().getCountryList();
-            case "3" -> listWords = new WordList().getFruitList();
-            case "4" -> listWords = new WordList().getSportList();
-            case "5" -> listWords = new WordList().getRandomListWords();
-            default -> {
+            case ANIMALS -> listWords = new WordList().getAnimalList();
+            case COUNTRIES -> listWords = new WordList().getCountryList();
+            case FRUITS -> listWords = new WordList().getFruitList();
+            case SPORTS -> listWords = new WordList().getSportList();
+            case RANDOM -> listWords = new WordList().getRandomListWords();
+            case null -> {
                 out.print("Вы ввели неверные данные, "
                     + "попробуйте ещё раз, введите одну цифру - желаемую категорию: ");
-                category = scanner.nextLine();
-                selectCategory(category);
+                selectCategory(scanner.nextLine());
             }
         }
     }
