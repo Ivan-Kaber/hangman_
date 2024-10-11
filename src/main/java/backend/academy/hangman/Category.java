@@ -18,6 +18,6 @@ public enum Category {
     public static String getOrderView() {
         return Arrays.stream(values())
             .map(c -> String.format("%s) %s", c.id, c.title))
-            .collect(Collectors.joining("\n"));
+            .collect(Collectors.joining(System.lineSeparator()));
     }
 }
