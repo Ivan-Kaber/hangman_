@@ -18,19 +18,18 @@ public class GameInterface {
 
     public void startGame() {
         String choiceCategory;
-        /*Заменил тестовый блок на строку, т.к. чекстайл выдавал VA_FORMAT_STRING_USES_NEWLINE из-за \n,
-        который автоматически устанавливается при переносе строки. Были другие варианты:
-        использовать SuppressWarnings, либо писать все в одну строку в виде: """abcd%n%s%nefg"""*/
-        out.printf("Выберите категорию слов%n"
-            + "%s%n"
-            + "Введите одну цифру - желаемую категорию: ", Category.getOrderView());
+        out.printf("""
+            Выберите категорию слов%n\
+            %s%n\
+            Введите одну цифру - желаемую категорию:\s""", Category.getOrderView());
         choiceCategory = scanner.nextLine();
         gameLogic.selectCategory(choiceCategory);
 
         String choiceLvl;
-        out.printf("%nВыберите уровень сложности слова:%n"
-            + "%s %n"
-            + "Введите одну цифру - желаемый уровень сложности: ", Difficulty.getOrderView());
+        out.printf("""
+            %nВыберите уровень сложности слова:%n\
+            %s%n\
+            Введите одну цифру - желаемый уровень сложности:\s""", Difficulty.getOrderView());
         choiceLvl = scanner.nextLine();
         gameLogic.selectLvl(choiceLvl);
 
