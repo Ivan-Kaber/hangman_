@@ -16,7 +16,6 @@ class GameLogicTest {
     private PrintStream out;
     private Scanner scanner;
     private GameLogic gameLogic;
-    private WordList wordList;
     private HiddenWord hiddenWord;
 
     @BeforeEach
@@ -24,46 +23,45 @@ class GameLogicTest {
         out = mock(PrintStream.class);
         scanner = mock(Scanner.class);
         gameLogic = new GameLogic(out, scanner);
-        wordList = new WordList();
     }
 
     @Test
     void selectCategory_animal() {
         gameLogic.selectCategory("1");
 
-        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getAnimalList());
+        assertThat(gameLogic.getMapWords()).isEqualTo(WordList.getANIMALS());
     }
 
     @Test
     void selectCategory_country() {
-        gameLogic.selectCategory("2");
+        gameLogic.selectCategory("3");
 
-        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getCountryList());
+        assertThat(gameLogic.getMapWords()).isEqualTo(WordList.getCOUNTRIES());
     }
 
     @Test
     void selectCategory_fruit() {
-        gameLogic.selectCategory("3");
+        gameLogic.selectCategory("2");
 
-        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getFruitList());
+        assertThat(gameLogic.getMapWords()).isEqualTo(WordList.getFRUITS());
     }
 
     @Test
     void selectCategory_sport() {
         gameLogic.selectCategory("4");
 
-        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getSportList());
+        assertThat(gameLogic.getMapWords()).isEqualTo(WordList.getSPORTS());
     }
 
     @Test
     void selectCategory_random() {
         gameLogic.selectCategory("5");
 
-        assertThat(gameLogic.getListWords()).isIn(
-            wordList.getAnimalList(),
-            wordList.getCountryList(),
-            wordList.getFruitList(),
-            wordList.getSportList()
+        assertThat(gameLogic.getMapWords()).isIn(
+            WordList.getANIMALS(),
+            WordList.getCOUNTRIES(),
+            WordList.getFRUITS(),
+            WordList.getSPORTS()
         );
     }
 
@@ -78,7 +76,7 @@ class GameLogicTest {
 
         assertThat(captor.getValue()).contains("Вы ввели неверные данные, попробуйте ещё раз, "
             + "введите одну цифру - желаемую категорию: ");
-        assertThat(gameLogic.getListWords()).isEqualTo(wordList.getAnimalList());
+        assertThat(gameLogic.getMapWords()).isEqualTo(WordList.getANIMALS());
     }
 
     @Test
@@ -87,25 +85,25 @@ class GameLogicTest {
 
         gameLogic.selectLvl("1");
 
-        assertThat(gameLogic.getWords()).isEqualTo(wordList.getAnimalList().get(0));
+        assertThat(gameLogic.getWords()).isEqualTo(WordList.getANIMALS().get(Difficulty.EASY));
     }
 
     @Test
     void selectLvl_medium() {
-        gameLogic.selectCategory("2");
+        gameLogic.selectCategory("3");
 
         gameLogic.selectLvl("2");
 
-        assertThat(gameLogic.getWords()).isEqualTo(wordList.getCountryList().get(1));
+        assertThat(gameLogic.getWords()).isEqualTo(WordList.getCOUNTRIES().get(Difficulty.MEDIUM));
     }
 
     @Test
     void selectLvl_hard() {
-        gameLogic.selectCategory("3");
+        gameLogic.selectCategory("2");
 
         gameLogic.selectLvl("3");
 
-        assertThat(gameLogic.getWords()).isEqualTo(wordList.getFruitList().get(2));
+        assertThat(gameLogic.getWords()).isEqualTo(WordList.getFRUITS().get(Difficulty.HARD));
     }
 
     @Test
@@ -115,9 +113,9 @@ class GameLogicTest {
         gameLogic.selectLvl("4");
 
         assertThat(gameLogic.getWords()).isIn(
-            wordList.getAnimalList().get(0),
-            wordList.getAnimalList().get(1),
-            wordList.getAnimalList().get(2)
+            WordList.getANIMALS().get(Difficulty.EASY),
+            WordList.getANIMALS().get(Difficulty.MEDIUM),
+            WordList.getANIMALS().get(Difficulty.HARD)
         );
     }
 
@@ -135,7 +133,7 @@ class GameLogicTest {
         assertThat(captor.getValue()).contains("Вы ввели неверные данные, попробуйте ещё раз, "
             + "введите одну цифру - желаемый уровень сложности: ");
 
-        assertThat(gameLogic.getWords()).isEqualTo(wordList.getAnimalList().get(0));
+        assertThat(gameLogic.getWords()).isEqualTo(WordList.getANIMALS().get(Difficulty.EASY));
     }
 
     @Test
