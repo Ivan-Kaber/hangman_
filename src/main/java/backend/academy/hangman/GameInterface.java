@@ -17,21 +17,17 @@ public class GameInterface {
     }
 
     public void startGame() {
-        String choiceCategory;
         out.printf("""
             Выберите категорию слов%n\
             %s%n\
             Введите одну цифру - желаемую категорию:\s""", Category.getOrderView());
-        choiceCategory = scanner.nextLine();
-        gameLogic.selectCategory(choiceCategory);
+        gameLogic.selectCategory(scanner.nextLine());
 
-        String choiceLvl;
         out.printf("""
             %nВыберите уровень сложности слова:%n\
             %s%n\
             Введите одну цифру - желаемый уровень сложности:\s""", Difficulty.getOrderView());
-        choiceLvl = scanner.nextLine();
-        gameLogic.selectLvl(choiceLvl);
+        gameLogic.selectLvl(scanner.nextLine());
 
         gameLogic.chooseRandomWord();
         while (!gameLogic.isGameOver()) {
