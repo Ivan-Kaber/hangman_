@@ -4,20 +4,20 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import java.util.List;
+import java.util.Map;
 
 class WordListTest {
-    private final WordList wordList = new WordList();
 
     @Test
     void getRandomListWords_shouldReturnValidList() {
         for (int i = 0; i < 100; i++) {
-            List<List<Word>> result = wordList.getRandomListWords();
+            Map<Difficulty, List<Word>> result = WordList.getRandomListWords();
 
             assertThat(result).isIn(
-                wordList.getAnimalList(),
-                wordList.getCountryList(),
-                wordList.getFruitList(),
-                wordList.getSportList()
+                WordList.getANIMALS(),
+                WordList.getCOUNTRIES(),
+                WordList.getFRUITS(),
+                WordList.getSPORTS()
             );
         }
     }
@@ -27,15 +27,14 @@ class WordListTest {
         List<Word> list = List.of(
             new Word("лиса", Category.ANIMALS, "Хищник с рыжей шерстью")
         );
-        WordList wordList = new WordList();
-        assertThat(wordList.getRandomWord(list)).isEqualTo(
+        assertThat(WordList.getRandomWord(list)).isEqualTo(
             new Word("лиса", Category.ANIMALS, "Хищник с рыжей шерстью"));
     }
 
     @RepeatedTest(10)
     void getRandomWord_checkRandomWord() {
-        List<List<Word>> randomList = wordList.getRandomListWords();
-        Word randomWord = wordList.getRandomWord(randomList.getFirst());
+        Map<Difficulty, List<Word>> randomList = WordList.getRandomListWords();
+        Word randomWord = WordList.getRandomWord(randomList.get(Difficulty.EASY));
 
         assertThat(randomWord).isNotNull();
         assertThat(randomWord.category()).isIn(Category.ANIMALS, Category.COUNTRIES, Category.FRUITS, Category.SPORTS);
