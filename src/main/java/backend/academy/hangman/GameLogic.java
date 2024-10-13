@@ -3,6 +3,8 @@ package backend.academy.hangman;
 import java.io.PrintStream;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import lombok.Getter;
@@ -21,7 +23,7 @@ public class GameLogic {
     private final Alphabet alphabet;
     private final PrintStream out;
     private final Scanner scanner;
-    private List<List<Word>> listWords;
+    private Map<Difficulty, List<Word>> mapWords;
     private List<Word> words;
     private HiddenWord hiddenWord;
     private Word word;
@@ -37,48 +39,52 @@ public class GameLogic {
     }
 
     public void selectCategory(String choiceCategory) {
-        Category category;
-        if(StringUtils.isNumeric(choiceCategory)) {
-            category = Category.getById(Integer.parseInt(choiceCategory));
-        }
-        else {
-            category = null;
+        Optional<Category> category;
+        if (StringUtils.isNumeric(choiceCategory)) {
+            category = Optional.ofNullable(Category.getById(Integer.parseInt(choiceCategory)));
+        } else {
+            category = Optional.empty();
         }
 
-        switch (category) {
-            case ANIMALS -> listWords = WordList.getAnimalList();
-            case COUNTRIES -> listWords = WordList.getCountryList();
-            case FRUITS -> listWords = WordList.getFruitList();
-            case SPORTS -> listWords = WordList.getSportList();
-            case RANDOM -> listWords = WordList.getRandomListWords();
-            case null -> {
+        category.ifPresentOrElse(c -> {
+                switch (c) {
+                    case ANIMALS -> mapWords = WordList.getANIMALS();
+                    case COUNTRIES -> mapWords = WordList.getCOUNTRIES();
+                    case FRUITS -> mapWords = WordList.getFRUITS();
+                    case SPORTS -> mapWords = WordList.getSPORTS();
+                    case RANDOM -> mapWords = WordList.getRandomListWords();
+                    default -> throw new RuntimeException("Unexpected category: " + c);
+                }
+            },
+            () -> {
                 out.print("Вы ввели неверные данные, "
                     + "попробуйте ещё раз, введите одну цифру - желаемую категорию: ");
                 selectCategory(scanner.nextLine());
-            }
-        }
+            });
     }
 
     public void selectLvl(String choiceLvl) {
-        Difficulty difficulty;
-        if(StringUtils.isNumeric(choiceLvl)) {
-            difficulty = Difficulty.getById(Integer.parseInt(choiceLvl));
-        }
-        else {
-            difficulty = null;
+        Optional<Difficulty> difficulty;
+        if (StringUtils.isNumeric(choiceLvl)) {
+            difficulty = Optional.ofNullable(Difficulty.getById(Integer.parseInt(choiceLvl)));
+        } else {
+            difficulty = Optional.empty();
         }
 
-        switch (difficulty) {
-            case EASY -> words = listWords.get(0);
-            case MEDIUM -> words = listWords.get(1);
-            case HARD -> words = listWords.get(2);
-            case RANDOM -> words = listWords.get(random.nextInt(3));
-            case null -> {
-                out.print("Вы ввели неверные данные, попробуйте ещё раз, "
-                    + "введите одну цифру - желаемый уровень сложности: ");
-                selectLvl(scanner.nextLine());
+        difficulty.ifPresentOrElse(c -> {
+            switch (c) {
+                case EASY -> words = mapWords.get(Difficulty.EASY);
+                case MEDIUM -> words = mapWords.get(Difficulty.MEDIUM);
+                case HARD -> words = mapWords.get(Difficulty.HARD);
+                case RANDOM -> words = mapWords.get(
+                    Difficulty.values()[random.nextInt(Difficulty.values().length - 1)]); //not considering RANDOM
+                default -> throw new RuntimeException("Unexpected difficulty: " + c);
             }
-        }
+        }, () -> {
+            out.print("Вы ввели неверные данные, попробуйте ещё раз, "
+                + "введите одну цифру - желаемый уровень сложности: ");
+            selectLvl(scanner.nextLine());
+        });
     }
 
     public void chooseRandomWord() {
